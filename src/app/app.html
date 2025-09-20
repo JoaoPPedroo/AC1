@@ -1,0 +1,47 @@
+<div class="container">
+  <header>
+    <h1>Casa do Torcedor</h1>
+  </header>
+
+  <main>
+    @for (noticia of noticias; track noticia; let i = $index) {
+      <div class="card-noticia">
+        <h2>{{ noticia.titulo }}</h2>
+        <div class="info-autor">
+          <p><strong>Autor:</strong> {{ noticia.autor }}</p>
+          <p><strong>Publicado em:</strong> {{ noticia.data }}</p>
+        </div>
+        <p class="conteudo">{{ noticia.conteudo }}</p>
+
+        <div class="interacao">
+          <button (click)="curtir(i)">Curtir</button>
+          <span class="badge-curtidas">{{ noticia.curtidas }} curtidas</span>
+        </div>
+
+        <div class="secao-comentarios">
+          <h3>Comentários</h3>
+          <ul>
+            @for (comentario of noticia.comentarios; track comentario) {
+              <li>{{ comentario }}</li>
+            }
+            @if (noticia.comentarios.length === 0) {
+              <p>Seja o primeiro a comentar!</p>
+            }
+          </ul>
+
+          <div class="novo-comentario">
+            <input
+              type="text"
+              placeholder="Escreva seu comentário..."
+              [(ngModel)]="novoComentario[i]"
+              (keyup.enter)="comentar(i)"
+            >
+            <button (click)="comentar(i)">Comentar</button>
+          </div>
+        </div>
+      </div>
+    }
+  </main>
+</div>
+
+<router-outlet></router-outlet>
